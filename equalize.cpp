@@ -12,7 +12,7 @@ using namespace std;
 //
 // usage: equalize <file> <line length>
 //
-// compile with GCC: g++ equalize.cpp -o equalize -std=c++11
+// compile with GCC: g++ equalize.cpp -o equalize -std=c++11 -O3 -s
 int main(int argc, char *argv[]) 
 {
     // line read from file
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     // check arguments
     if (argc != 3)
     {
-        cout << "wcc file line_length" << endl;
+        cout << "Usage: equalize file line_length" << endl;
         exit(1);
     }
 
