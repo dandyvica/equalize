@@ -1,16 +1,17 @@
 #include <iostream>
 #include <fstream>
-#include <string>
+#include <cstring>
 #include <limits>
+#include <cerrno>
 #include <iomanip>
 
 using namespace std;
 
-// very simple utility used to output all lines of an ASCII file with
+// Very simple utility used to output all lines of an ASCII file with
 // the same length. The desired line length is output as a second argument.
 // Shorter lines are padded with blanks and longer lines are simply trimmed.
 //
-// usage: equalize <file> <line length>
+// usage: equalize [FILE] [LINE_LENGTH]
 //
 // compile with GCC: g++ equalize.cpp -o equalize -std=c++11 -O3 -s
 int main(int argc, char *argv[]) 
@@ -21,7 +22,12 @@ int main(int argc, char *argv[])
     // check arguments
     if (argc != 3)
     {
-        cout << "Usage: equalize file line_length" << endl;
+        cout << "Usage: equalize [FILE] [LINE_LENGTH]" << endl;
+
+        string help = "\nVery simple utility used to output all lines of an ASCII file with the same length.\n"
+        "The desired line length is output as a second argument. Shorter lines are padded with blanks and longer lines are simply trimmed.";
+        cout << help << endl;
+
         exit(1);
     }
 
@@ -29,11 +35,11 @@ int main(int argc, char *argv[])
     ifstream input_file(argv[1]);
 
     // check if file is opened
-    if (!input_file)
+    if (input_file.fail())
     {
-        cout << "Unable to open file " << argv[1] << endl;
+        cout << "Unable to open file <" << argv[1] << ">. Error <" << std::strerror(errno) << ">" << endl;
         exit(2);
-    }
+    }    
 
     // desired line length
     int desired_length = stoi(argv[2]);
